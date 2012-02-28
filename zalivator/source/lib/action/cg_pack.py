@@ -10,3 +10,6 @@ class Action_Pack(Action_Abstract):
 
     def __init__(self, app, menu):
         Action_Abstract.__init__(self, app, menu)
+
+    def execute(self):
+        self.get_app().set_mode('pack')

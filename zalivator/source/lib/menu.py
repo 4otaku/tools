@@ -23,9 +23,9 @@ class Menu(Abstract):
             menu_upload = QtGui.QMenu(menubar)
             menu_upload.setObjectName("menu_upload")
 
-            self.actions['art'] = art.Action_Art(app, menu_upload)
+#            self.actions['art'] = art.Action_Art(app, menu_upload)
             self.actions['cg_pack'] = cg_pack.Action_Pack(app, menu_upload)
-            self.actions['post'] = post.Action_Post(app, menu_upload)
+#            self.actions['post'] = post.Action_Post(app, menu_upload)
             self.actions['quit'] = quit.Action_Quit(app, menu_upload)
 
             menu_upload.setTitle(self.utf('Залить'))
