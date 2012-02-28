@@ -17,8 +17,9 @@ class App():
         except Exception as E:
             Error(E).display()
 
-    def execute(self):
+    def execute(self, mode):
         try:
+            self.set_mode(mode)
             self.get_window().show()
             self.get_qt_app().exec_()
         except Exception as E:
@@ -32,3 +33,8 @@ class App():
 
     def utf(self, string):
         return QtCore.QObject.trUtf8(self.get_window(), string)
+
+    def set_mode(self, mode):
+        name = 'Window_' + mode.capitalize()
+        module = __import__('lib.window.' + mode, globals(), locals(), [name], -1)
+        self._mode_instance = getattr(module, name)(self)
