@@ -1,30 +1,33 @@
 # -*- coding: utf8 -*-
 
 from PyQt4 import QtCore, QtGui
+from lib.abstract import Abstract
+from lib.error import Error
+from lib.action import *
 
 # ======================================================================
-class Menu():
+class Menu(Abstract):
 
-  def __init__(self, app):
-    try:
-      window = app.get_window()
+    def __init__(self, app):
+        Abstract.__init__(self, app)
 
-      menubar = QtGui.QMenuBar(window)
-      menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
-      menubar.setObjectName("menubar")
+        try:
+            window = self.get_app().get_window()
 
-      menu_upload = QtGui.QMenu(menubar)
-      menu_upload.setObjectName("menu_upload")
-      window.setMenuBar(menubar)
+            menubar = QtGui.QMenuBar(window)
+            menubar.setGeometry(QtCore.QRect(0, 0, 800, 24))
+            menubar.setObjectName("menubar")
 
-#      actionupdateall = QtGui.QAction(window)
-#      actionupdateall.setObjectName("actionupdateall")
-#      actionupdateall.setText("Whee")
+            menu_upload = QtGui.QMenu(menubar)
+            menu_upload.setObjectName("menu_upload")
+            window.setMenuBar(menubar)
 
-#      menu_upload.addSeparator()
-#      menu_upload.addAction(actionupdateall)
-      menubar.addAction(menu_upload.menuAction())
+            art.Action_Art(app, menu_upload)
+            cg_pack.Action_Pack(app, menu_upload)
+            post.Action_Post(app, menu_upload)
+            quit.Action_Quit(app, menu_upload)
+            menu_upload.setTitle(self.get_app().utf('Залить'))
 
-      menu_upload.setTitle(app.utf('Залить'))
-    except Exception as E:
-      print E
+            menubar.addAction(menu_upload.menuAction())
+        except Exception as E:
+            Error(E).display()
