@@ -13,7 +13,7 @@ class App():
             self._qt_app = QtGui.QApplication(sys.argv)
             self._window = QtGui.QMainWindow()
 
-            Menu(self)
+            self._menu = Menu(self)
         except Exception as E:
             Error(E).display()
 

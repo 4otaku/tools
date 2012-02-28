@@ -7,8 +7,8 @@ from lib.error import Error
 # ======================================================================
 class Action_Abstract(Abstract):
 
-    object_name = ''
     text = ''
+    tip = ''
 
     def __init__(self, app, menu):
         Abstract.__init__(self, app)
@@ -22,6 +22,13 @@ class Action_Abstract(Abstract):
 
     def build_action(self):
         action = QtGui.QAction(self.get_window())
-        action.setObjectName(self.object_name)
         action.setText(self.utf(self.text))
+
+        if len(self.tip) > 0:
+            action.setStatusTip(self.utf(self.tip))
+
+        action.triggered.connect(self.execute)
         return action
+
+    def execute(self):
+        pass

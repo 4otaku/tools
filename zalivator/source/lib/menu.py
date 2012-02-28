@@ -8,6 +8,8 @@ from lib.action import *
 # ======================================================================
 class Menu(Abstract):
 
+    actions = {}
+
     def __init__(self, app):
         Abstract.__init__(self, app)
 
@@ -22,10 +24,10 @@ class Menu(Abstract):
             menu_upload.setObjectName("menu_upload")
             window.setMenuBar(menubar)
 
-            art.Action_Art(app, menu_upload)
-            cg_pack.Action_Pack(app, menu_upload)
-            post.Action_Post(app, menu_upload)
-            quit.Action_Quit(app, menu_upload)
+            self.actions['art'] = art.Action_Art(app, menu_upload)
+            self.actions['cg_pack'] = cg_pack.Action_Pack(app, menu_upload)
+            self.actions['post'] = post.Action_Post(app, menu_upload)
+            self.actions['quit'] = quit.Action_Quit(app, menu_upload)
             menu_upload.setTitle(self.get_app().utf('Залить'))
 
             menubar.addAction(menu_upload.menuAction())
