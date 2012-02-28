@@ -13,6 +13,8 @@ class App():
             self._qt_app = QtGui.QApplication(sys.argv)
             self._window = QtGui.QMainWindow()
 
+            self._window.resize(600, 480)
+
             self._menu = Menu(self)
         except Exception as E:
             Error(E).display()
