@@ -11,6 +11,8 @@ class Window_Abstract(Abstract):
         Abstract.__init__(self, app)
 
         try:
-            pass
+            widget = self.get_window().centralWidget()
+            if widget:
+                widget.close()
         except Exception as E:
             Error(E).display()

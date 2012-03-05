@@ -6,6 +6,8 @@ from PyQt4 import QtCore, QtGui
 # ======================================================================
 class Window_Default(Window_Abstract):
 
+    stateIndex = 1
+
     welcome_text = 'Добро пожаловать в заливтор чотаку. <br />' + \
         'Для начала работы выберите один из пунктов в меню "Залить".'
 
@@ -16,3 +18,5 @@ class Window_Default(Window_Abstract):
         self._text.setGeometry(0, 0, 600, 400)
         self._text.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
         self._text.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.get_window().setCentralWidget(self._text);
