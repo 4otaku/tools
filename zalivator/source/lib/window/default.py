@@ -14,9 +14,7 @@ class Window_Default(Window_Abstract):
     def __init__(self, app):
         Window_Abstract.__init__(self, app)
 
-        self._text = QtGui.QLabel(self.utf(self.welcome_text), self.get_window())
+        self._text = QtGui.QLabel(self.utf(self.welcome_text), self.get_box())
         self._text.setGeometry(0, 0, 600, 400)
         self._text.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
         self._text.setAlignment(QtCore.Qt.AlignCenter)
-
-        self.get_window().setCentralWidget(self._text);

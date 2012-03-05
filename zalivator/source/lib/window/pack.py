@@ -11,7 +11,7 @@ class Window_Pack(Window_Abstract):
     def __init__(self, app):
         Window_Abstract.__init__(self, app)
 
-        self._button = QtGui.QPushButton("Выберите файл", self.get_window())
+        self._button = QtGui.QPushButton(self.utf("Выберите файл"), self.get_box())
         self._button.show()
 
 #        self.fileDialog = QtGui.QFileDialog(self.get_window())

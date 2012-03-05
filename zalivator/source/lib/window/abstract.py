@@ -14,5 +14,12 @@ class Window_Abstract(Abstract):
             widget = self.get_window().centralWidget()
             if widget:
                 widget.close()
+
+            self._box = QtGui.QGroupBox(self.get_window())
+            self._box.setGeometry(0, 0, 600, 480)
+            self.get_window().setCentralWidget(self._box)
         except Exception as E:
             Error(E).display()
+
+    def get_box(self):
+        return self._box
