@@ -9,8 +9,22 @@ class Window_Pack(Window_Abstract):
     def __init__(self, app):
         Window_Abstract.__init__(self, app)
 
-        self._button = QtGui.QPushButton(self.utf("Выберите файл"), self.get_box())
-        self._button.clicked.connect(self.select_file)
+        layout = QtGui.QHBoxLayout()
+
+        self._button = QtGui.QGroupBox(self.get_box())
+        self._button.setGeometry(0, 0, 600, 40)
+        self._button.setLayout(layout)
+
+        button = QtGui.QPushButton(self.utf("Выберите файл"), self._button)
+        button.setGeometry(0, 0, 100, 40)
+        button.clicked.connect(self.select_file)
+
+        layout.addWidget(button)
+
+        self._label = QtGui.QLabel('', self._button)
+        self._label.setGeometry(100, 0, 600, 40)
+        self._label.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
+
         self.get_layout().addWidget(self._button)
 
         self._title = QtGui.QLineEdit(QtCore.QString(self.utf('Введите заголовок')), self.get_box())
