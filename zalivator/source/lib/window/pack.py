@@ -12,18 +12,17 @@ class Window_Pack(Window_Abstract):
         layout = QtGui.QHBoxLayout()
 
         self._button = QtGui.QGroupBox(self.get_box())
-        self._button.setGeometry(0, 0, 600, 40)
         self._button.setLayout(layout)
 
         button = QtGui.QPushButton(self.utf("Выберите файл"), self._button)
-        button.setGeometry(0, 0, 100, 40)
         button.clicked.connect(self.select_file)
 
         layout.addWidget(button)
 
-        self._label = QtGui.QLabel('', self._button)
-        self._label.setGeometry(100, 0, 600, 40)
+        self._label = QtGui.QLabel(self.utf("Файл не выбран"), self._button)
         self._label.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
+
+        layout.addWidget(self._label)
 
         self.get_layout().addWidget(self._button)
 
@@ -38,9 +37,13 @@ class Window_Pack(Window_Abstract):
         self.get_layout().addWidget(self._send)
 
     def select_file(self, data):
-        self._file_dialog = QtGui.QFileDialog(self.get_window())
-        self._file_dialog.show()
-#        lineEdit.setText(QFileDialog.getOpenFileName())
+        file_name = QtGui.QFileDialog.getOpenFileName(None, self.utf("Выберите архив"),
+            "", self.utf("Архив в формате zip(*.zip)"))
+        if file_name.length():
+            if file_name.length() > 55:
+                file_name = file_name.left(20) + QtCore.QString(".....") + file_name.right(30)
+
+            self._label.setText(file_name)
 
     def send_file(self, data):
         self._file_dialog = QtGui.QFileDialog(self.get_window())
