@@ -67,4 +67,4 @@ class Window_Pack(Window_Abstract):
             self._send.setDisabled(False)
 
     def send_file(self, data):
-        pass
+        print unicode(self._selected_file.toUtf8(), "utf-8")
