@@ -3,6 +3,7 @@
 from PyQt4 import QtCore, QtGui
 from lib.window.abstract import Window_Abstract
 from lib.error import Error
+from time import sleep
 
 # ======================================================================
 class Send_Abstract(Window_Abstract):
@@ -26,6 +27,9 @@ class Send_Abstract(Window_Abstract):
         bar = QtGui.QProgressBar(self.get_box())
         bar.setMinimum(0)
         bar.setMaximum(100)
-        for a in range(100):
-            sleep(1)
-            bar.setValue(a)
+        bar.setValue(0)
+
+        self.inited_bars.key = bar
+
+    def get_bar(self, key):
+        return self.inited_bars.key

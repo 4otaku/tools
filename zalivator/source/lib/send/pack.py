@@ -6,4 +6,4 @@ from PyQt4 import QtCore, QtGui
 # ======================================================================
 class Send_Pack(Send_Abstract):
 
-    tabs = {'test': 'test'}
+    bars = {'test': 'test'}
