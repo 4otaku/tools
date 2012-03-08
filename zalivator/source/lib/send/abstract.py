@@ -16,8 +16,6 @@ class Send_Abstract(Window_Abstract):
 
         try:
             for key, bar in self.bars.iteritems():
-                print key
-                print bar
                 self.init_bar(key, bar)
 
         except Exception as E:
