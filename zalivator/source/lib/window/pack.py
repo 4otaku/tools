@@ -67,4 +67,8 @@ class Window_Pack(Window_Abstract):
             self._send.setDisabled(False)
 
     def send_file(self, data):
-        sender = self.get_app().start_send('pack')
+        data = {}
+        data['filename'] = unicode(self._selected_file.toUtf8(), "utf-8")
+        data['title'] = unicode(self._input_title.toUtf8(), "utf-8")
+        data['text'] = unicode(self._input_text.toUtf8(), "utf-8")
+        self.get_app().start_send('pack', data)

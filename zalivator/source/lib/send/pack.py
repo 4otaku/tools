@@ -6,4 +6,7 @@ from PyQt4 import QtCore, QtGui
 # ======================================================================
 class Send_Pack(Send_Abstract):
 
-    bars = {'test': 'test'}
+    bars = {
+        'file': 'Подготавливаю архив',
+        'send': 'Отсылаю запрос'
+    }

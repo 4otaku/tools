@@ -41,9 +41,8 @@ class App():
         module = __import__('lib.window.' + mode, globals(), locals(), [name], -1)
         self._mode_instance = getattr(module, name)(self)
 
-    def start_send(self, mode):
+    def start_send(self, mode, data):
         name = 'Send_' + mode.capitalize()
         module = __import__('lib.send.' + mode, globals(), locals(), [name], -1)
-        self._mode_instance = getattr(module, name)(self)
-        return self._mode_instance
+        self._mode_instance = getattr(module, name)(self, data)
 
