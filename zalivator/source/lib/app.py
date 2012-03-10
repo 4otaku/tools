@@ -57,3 +57,8 @@ class App():
             self._window.hide()
             self._error = Error(E).display()
 
+    def trigger_error(self):
+
+        self._window.hide()
+        self._error = Error(Exception()).display()
+

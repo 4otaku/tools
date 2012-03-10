@@ -23,31 +23,37 @@ class Thread_Send(Thread_Abstract):
         self._filename = self._file.fileName()
 
     def run(self):
+        try:
+            body = [('format', 'json')]
+            for key, value in self._data.iteritems():
+                body.append((key, value.encode('UTF-8')))
 
-        body = [('format', 'json')]
-        for key, value in self._data.iteritems():
-            body.append((key, value.encode('UTF-8')))
+            f = open(self._filename, 'w')
+            body = urllib.urlencode(body).encode('UTF-8')
+            total = len(body)
+            written = 0
+            while len(body) > 0:
+                part = body[:1024000]
+                f.write(part)
+                written += 1024000
+                pct = 5 + (written * 25 / total)
+                self.emit(QtCore.SIGNAL("progress"), round(pct))
+                body = body[1024000:]
+            f.close()
 
-        f = open(self._filename, 'w')
-        body = urllib.urlencode(body).encode('UTF-8')
-        total = len(body)
-        written = 0
-        while len(body) > 0:
-            part = body[:1024000]
-            f.write(part)
-            written += 1024000
-            pct = 5 + (written * 25 / total)
-            self.emit(QtCore.SIGNAL("progress"), round(pct))
-            body = body[1024000:]
-        f.close()
+            stream = Util_File_Callback(self._filename, 'rb', self.update, self._filename)
+            req = urllib2.Request(self._url, stream)
+            res = urllib2.urlopen(req)
 
-        stream = Util_File_Callback(self._filename, 'rb', self.update, self._filename)
-        req = urllib2.Request(self._url, stream)
-        res = urllib2.urlopen(req)
+            del self._file
 
-        del self._file
+            try:
+                self.emit(QtCore.SIGNAL("finished"), json.load(res))
+            except Exception as E:
+                self.emit(QtCore.SIGNAL("finished"), {'success': False, 'large': True})
 
-        self.emit(QtCore.SIGNAL("finished"), res.read())
+        except Exception as E:
+            self.emit(QtCore.SIGNAL("error"))
 
     def update(self, total, size, name):
         self._sent += size

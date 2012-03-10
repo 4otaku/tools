@@ -69,6 +69,7 @@ class Send_Abstract(Window_Abstract):
         self.active_bar = bar
         self.get_box().connect(self.parser, QtCore.SIGNAL("progress"), self.on_file_parse)
         self.get_box().connect(self.parser, QtCore.SIGNAL("finished"), self.on_file_finish)
+        self.get_box().connect(self.parser, QtCore.SIGNAL("error"), self.trigger_error)
         self.parser.start()
 
     def on_file_parse(self, count):
@@ -91,6 +92,7 @@ class Send_Abstract(Window_Abstract):
         self.active_bar = bar
         self.get_box().connect(self.sender, QtCore.SIGNAL("progress"), self.on_send_progress)
         self.get_box().connect(self.sender, QtCore.SIGNAL("finished"), self.on_send_finish)
+        self.get_box().connect(self.sender, QtCore.SIGNAL("error"), self.trigger_error)
 
         bar['bar'].setValue(5)
 
@@ -102,3 +104,16 @@ class Send_Abstract(Window_Abstract):
     def on_send_finish(self, data):
         self.active_bar['ready'] = True
         self.active_bar['bar'].setValue(100)
+
+    def trigger_error(self):
+        self.get_app().trigger_error()
+
+    def translate_error_code(self, code):
+        if code == 420 or code == 430:
+            return 'Некорректные данные.'
+
+        if code == 30:
+            return 'CG-пак с таким названием уже добавлен.'
+
+        if code == 10:
+            return 'Выбранный вами файл превышает 125 мегабайт.'

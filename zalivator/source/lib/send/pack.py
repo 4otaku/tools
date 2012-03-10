@@ -12,6 +12,11 @@ class Send_Pack(Send_Abstract):
         'file': 'Подготавливаю архив'
     }
     _url = '/api/create/art/pack'
+    _success_text = 'Ваш CG-пак успешно добавлен и появится по адресу ' + \
+        '<a href="{0}/art/pack/{1}">{0}/art/pack/{1}</a>, ' + \
+        'когда арты будут обработаны. Это может занять до нескольких часов.<br />' + \
+        'В общем списке ваш пак появится, когда будет проверен модератором. ' + \
+        'Приносим извинения за неудобства'
 
     def process_request(self):
         self.send_data = {}
@@ -32,4 +37,27 @@ class Send_Pack(Send_Abstract):
         self.send(self.get_bar('send'))
 
     def on_send_finish(self, data):
-        print data
+        if data['success']:
+            text = self.success_text(data['id'])
+        else:
+            text = 'Ошибка.<br /><br />'.decode('UTF-8') + self.error_text(data)
+
+        self._result_box.setHtml(self.utf(text))
+
+    def success_text(self, item_id):
+        return self._success_text.format(self._domain, item_id)
+
+    def error_text(self, data):
+        if 'large' in data and data['large']:
+            return 'Выбранный вами файл превышает 125 мегабайт.'
+
+        if 'errors' in data:
+            error = data['errors'].pop()
+            ret = self.translate_error_code(error['code']).decode('UTF-8')
+            if 'message' in error:
+                ret += '<br />' + error['message'].decode('UTF-8')
+            if 'id' in data:
+                ret += '<a href="{0}/art/pack/{1}">{0}/art/pack/{1}</a>'.format(self._domain, data['id'])
+            return ret
+
+        return 'Природу ошибки определить не удалось.'

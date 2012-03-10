@@ -16,15 +16,19 @@ class Thread_File(Thread_Abstract):
         self.filename = filename
 
     def run(self):
-        size = stat(self.filename).st_size
-        block_count = int(ceil(size / 1023))
+        try:
+            size = stat(self.filename).st_size
+            block_count = int(ceil(size / 1023))
 
-        ret = ''
-        f = open(self.filename)
-        for i in range(block_count):
-            data = f.read(1023)
-            data = b64encode(data)
-            ret += data
-            self.emit(QtCore.SIGNAL("progress"), round(i * 100 / block_count))
+            ret = ''
+            f = open(self.filename)
+            for i in range(block_count):
+                data = f.read(1023)
+                data = b64encode(data)
+                ret += data
+                self.emit(QtCore.SIGNAL("progress"), round(i * 100 / block_count))
 
-        self.emit(QtCore.SIGNAL("finished"), ret)
+            self.emit(QtCore.SIGNAL("finished"), ret)
+
+        except Exception as E:
+            self.emit(QtCore.SIGNAL("error"))
