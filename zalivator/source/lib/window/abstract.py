@@ -2,7 +2,6 @@
 
 from PyQt4 import QtCore, QtGui
 from lib.abstract import Abstract
-from lib.error import Error
 
 # ======================================================================
 class Window_Abstract(Abstract):
@@ -10,20 +9,17 @@ class Window_Abstract(Abstract):
     def __init__(self, app):
         Abstract.__init__(self, app)
 
-        try:
-            widget = self.get_window().centralWidget()
-            if widget:
-                widget.close()
+        widget = self.get_window().centralWidget()
+        if widget:
+            widget.close()
 
-            self._layout = QtGui.QVBoxLayout()
+        self._layout = QtGui.QVBoxLayout()
 
-            self._box = QtGui.QGroupBox(self.get_window())
-            self._box.setGeometry(0, 0, 600, 480)
-            self._box.setLayout(self._layout)
+        self._box = QtGui.QGroupBox(self.get_window())
+        self._box.setGeometry(0, 0, 600, 480)
+        self._box.setLayout(self._layout)
 
-            self.get_window().setCentralWidget(self._box)
-        except Exception as E:
-            Error(E).display()
+        self.get_window().setCentralWidget(self._box)
 
     def get_box(self):
         return self._box

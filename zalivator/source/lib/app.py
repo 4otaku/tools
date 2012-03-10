@@ -17,6 +17,7 @@ class App():
             self._menu = Menu(self)
 
         except Exception as E:
+            self._window.hide()
             Error(E).display()
 
     def execute(self, mode):
@@ -25,6 +26,7 @@ class App():
             self.get_window().show()
             self.get_qt_app().exec_()
         except Exception as E:
+            self._window.hide()
             Error(E).display()
 
     def get_window(self):
@@ -37,12 +39,20 @@ class App():
         return QtCore.QObject.trUtf8(self.get_window(), string)
 
     def set_mode(self, mode):
-        name = 'Window_' + mode.capitalize()
-        module = __import__('lib.window.' + mode, globals(), locals(), [name], -1)
-        self._mode_instance = getattr(module, name)(self)
+        try:
+            name = 'Window_' + mode.capitalize()
+            module = __import__('lib.window.' + mode, globals(), locals(), [name], -1)
+            self._mode_instance = getattr(module, name)(self)
+        except Exception as E:
+            self._window.hide()
+            Error(E).display()
 
     def start_send(self, mode, data):
-        name = 'Send_' + mode.capitalize()
-        module = __import__('lib.send.' + mode, globals(), locals(), [name], -1)
-        self._mode_instance = getattr(module, name)(self, data)
+        try:
+            name = 'Send_' + mode.capitalize()
+            module = __import__('lib.send.' + mode, globals(), locals(), [name], -1)
+            self._mode_instance = getattr(module, name)(self, data)
+        except Exception as E:
+            self._window.hide()
+            Error(E).display()
 

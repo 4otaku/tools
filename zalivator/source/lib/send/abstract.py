@@ -4,7 +4,6 @@ from PyQt4 import QtCore, QtGui
 from lib.window.abstract import Window_Abstract
 from lib.thread.file import Thread_File
 from lib.thread.send import Thread_Send
-from lib.error import Error
 from time import sleep
 
 # ======================================================================
@@ -20,24 +19,20 @@ class Send_Abstract(Window_Abstract):
     def __init__(self, app, data):
         Window_Abstract.__init__(self, app)
 
-        try:
-            for key, bar in self.bars.iteritems():
-                self.init_bar(key, bar)
+        for key, bar in self.bars.iteritems():
+            self.init_bar(key, bar)
 
-            label = QtGui.QLabel(self.utf('Результат:'), self.get_box())
-            label.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
-            self.get_layout().addWidget(label)
+        label = QtGui.QLabel(self.utf('Результат:'), self.get_box())
+        label.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
+        self.get_layout().addWidget(label)
 
-            self._result_box = QtGui.QTextEdit('', self.get_box())
-            self._result_box.setReadOnly(True)
-            self.get_layout().addWidget(self._result_box)
+        self._result_box = QtGui.QTextEdit('', self.get_box())
+        self._result_box.setReadOnly(True)
+        self.get_layout().addWidget(self._result_box)
 
-            self.data = data
+        self.data = data
 
-            self.process_request()
-
-        except Exception as E:
-            Error(E).display()
+        self.process_request()
 
     def init_bar(self, key, config):
         layout = QtGui.QHBoxLayout()

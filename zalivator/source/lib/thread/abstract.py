@@ -1,7 +1,6 @@
 # -*- coding: utf8 -*-
 
 from PyQt4 import QtCore, QtGui
-from lib.error import Error
 
 # ======================================================================
 class Thread_Abstract(QtCore.QThread):
