@@ -1,5 +1,7 @@
 # -*- coding: utf8 -*-
 
+from PyQt4 import QtCore, QtGui
+
 # ======================================================================
 class Abstract():
 

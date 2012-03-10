@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 
-from PyQt4 import QtCore, QtGui
 from lib.abstract import Abstract
+from PyQt4 import QtCore, QtGui
 
 # ======================================================================
 class Window_Abstract(Abstract):
