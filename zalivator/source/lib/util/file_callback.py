@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+# License avaiavle at zalivator_license.txt in "licenses" directory
 
 import os
 

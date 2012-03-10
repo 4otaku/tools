@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+# License avaiavle at zalivator_license.txt in "licenses" directory
 
 from PyQt4 import QtCore, QtGui
 from lib.window.abstract import Window_Abstract

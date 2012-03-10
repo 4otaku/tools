@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+# License avaiavle at zalivator_license.txt in "licenses" directory
 
 from lib.thread.abstract import Thread_Abstract
 from lib.util.file_callback import Util_File_Callback
