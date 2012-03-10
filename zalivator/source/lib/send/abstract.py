@@ -24,9 +24,16 @@ class Send_Abstract(Window_Abstract):
             for key, bar in self.bars.iteritems():
                 self.init_bar(key, bar)
 
+            label = QtGui.QLabel(self.utf('Результат:'), self.get_box())
+            label.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
+            self.get_layout().addWidget(label)
+
+            self._result_box = QtGui.QTextEdit('', self.get_box())
+            self._result_box.setReadOnly(True)
+            self.get_layout().addWidget(self._result_box)
+
             self.data = data
 
-            sleep(0.001)
             self.process_request()
 
         except Exception as E:
