@@ -2,11 +2,10 @@
 
 from PyQt4 import QtCore, QtGui
 from lib.window.abstract import Window_Abstract
+from lib.thread.file import Thread_File
+from lib.thread.send import Thread_Send
 from lib.error import Error
 from time import sleep
-from os import stat
-from math import ceil
-from base64 import b64encode
 #import urllib.request
 #from urllib.parse import urlencode
 #import http.client
@@ -55,7 +54,7 @@ class Send_Abstract(Window_Abstract):
 
         self.get_layout().addWidget(progress_bar)
 
-        self.inited_bars[key] = bar
+        self.inited_bars[key] = {'bar': bar, 'ready': False}
 
     def get_bar(self, key):
         return self.inited_bars[key]
@@ -64,18 +63,23 @@ class Send_Abstract(Window_Abstract):
         pass
 
     def prepare_file(self, filename, bar):
-        size = stat(filename).st_size
-        block_count = int(ceil(size / 1023))
+        self.parser = Thread_File(filename, self.get_box())
+        self.active_bar = bar
+        self.get_box().connect(self.parser, QtCore.SIGNAL("parsed"), self.on_file_parse)
+        self.get_box().connect(self.parser, QtCore.SIGNAL("finished"), self.on_file_finish)
+        self.parser.start()
 
-        ret = ''
-        f = open(filename)
-        for i in range(block_count):
-            data = f.read(1023)
-            data = b64encode(data)
-            ret += data
-            sleep(1)
-            bar.setValue(round(i * 100 / block_count))
+    def on_file_parse(self, count):
+        self.active_bar['bar'].setValue(count)
 
-        bar.setValue(100)
+    def on_file_finish(self, data):
+        self.active_bar['ready'] = True
+        self.active_bar['bar'].setValue(100)
+        if self.test_send_ready():
+            self.start_send()
 
-        return ret
+    def test_send_ready(self):
+        return True
+
+    def start_send(self):
+        pass

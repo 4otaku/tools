@@ -12,9 +12,19 @@ class Send_Pack(Send_Abstract):
     }
 
     def process_request(self):
-        data = {}
+        self.send_data = {}
 
-        data['title'] = self.data['title']
-        data['text'] = self.data['text']
+        self.send_data['title'] = self.data['title']
+        self.send_data['text'] = self.data['text']
 
-        data['file'] = self.prepare_file(self.data['filename'], self.get_bar('file'))
+        self.prepare_file(self.data['filename'], self.get_bar('file'))
+
+    def on_file_finish(self, data):
+        self.send_data['archive'] = data
+        Send_Abstract.on_file_finish(self, data)
+
+    def test_send_ready(self):
+        return self.get_bar('file')['ready']
+
+    def start_send(self):
+        pass
