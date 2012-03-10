@@ -10,6 +10,7 @@ class Send_Pack(Send_Abstract):
         'send': 'Отсылаю запрос',
         'file': 'Подготавливаю архив'
     }
+    _url = '/api/create/art/pack'
 
     def process_request(self):
         self.send_data = {}
@@ -27,4 +28,7 @@ class Send_Pack(Send_Abstract):
         return self.get_bar('file')['ready']
 
     def start_send(self):
-        pass
+        self.send(self.get_bar('send'))
+
+    def on_send_finish(self, data):
+        print data

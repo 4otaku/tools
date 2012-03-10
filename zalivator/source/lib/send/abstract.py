@@ -6,10 +6,6 @@ from lib.thread.file import Thread_File
 from lib.thread.send import Thread_Send
 from lib.error import Error
 from time import sleep
-#import urllib.request
-#from urllib.parse import urlencode
-#import http.client
-#import json
 
 # ======================================================================
 class Send_Abstract(Window_Abstract):
@@ -17,6 +13,9 @@ class Send_Abstract(Window_Abstract):
     bars = {}
     data = {}
     inited_bars = {}
+
+    _domain = 'http://4otaku.local'
+    _url = ''
 
     def __init__(self, app, data):
         Window_Abstract.__init__(self, app)
@@ -65,7 +64,7 @@ class Send_Abstract(Window_Abstract):
     def prepare_file(self, filename, bar):
         self.parser = Thread_File(filename, self.get_box())
         self.active_bar = bar
-        self.get_box().connect(self.parser, QtCore.SIGNAL("parsed"), self.on_file_parse)
+        self.get_box().connect(self.parser, QtCore.SIGNAL("progress"), self.on_file_parse)
         self.get_box().connect(self.parser, QtCore.SIGNAL("finished"), self.on_file_finish)
         self.parser.start()
 
@@ -83,3 +82,20 @@ class Send_Abstract(Window_Abstract):
 
     def start_send(self):
         pass
+
+    def send(self, bar):
+        self.sender = Thread_Send(self.send_data, self._domain + self._url, self.get_box())
+        self.active_bar = bar
+        self.get_box().connect(self.sender, QtCore.SIGNAL("progress"), self.on_send_progress)
+        self.get_box().connect(self.sender, QtCore.SIGNAL("finished"), self.on_send_finish)
+
+        bar['bar'].setValue(5)
+
+        self.sender.start()
+
+    def on_send_progress(self, count):
+        self.active_bar['bar'].setValue(count)
+
+    def on_send_finish(self, data):
+        self.active_bar['ready'] = True
+        self.active_bar['bar'].setValue(100)

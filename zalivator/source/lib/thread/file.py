@@ -24,6 +24,6 @@ class Thread_File(Thread_Abstract):
             data = f.read(1023)
             data = b64encode(data)
             ret += data
-            self.emit(QtCore.SIGNAL("parsed"), round(i * 100 / block_count))
+            self.emit(QtCore.SIGNAL("progress"), round(i * 100 / block_count))
 
         self.emit(QtCore.SIGNAL("finished"), ret)
