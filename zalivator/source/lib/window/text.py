@@ -19,4 +19,4 @@ class Window_Text(Window_Abstract):
         self._text.setWordWrapMode(QtGui.QTextOption.WrapAtWordBoundaryOrAnywhere)
         self._text.setReadOnly(True)
 
-        self.get_layout().addWidget(self._text)
+        self.get_layout().addWidget(self._text, 1)

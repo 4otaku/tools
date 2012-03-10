@@ -22,11 +22,11 @@ class Window_Help(Window_Text):
         data = f.read()
         f.close()
 
-        self._help.setText(data)
+        self._help.setHtml(self.utf(data))
 
         self._help.setOpenExternalLinks(True)
         self._help.setFrameStyle(QtGui.QFrame.NoFrame)
         self._help.setWordWrapMode(QtGui.QTextOption.WrapAtWordBoundaryOrAnywhere)
         self._help.setReadOnly(True)
 
-        self.get_layout().addWidget(self._help)
+        self.get_layout().addWidget(self._help, 100)
