@@ -1,13 +1,17 @@
 # -*- coding: utf8 -*-
 
 import sys
+import traceback
 from PyQt4 import QtCore, QtGui
 
 # ======================================================================
 class Error():
 
+    error_text = 'Произошла фатальная ошибка. Передайте разработчику следующие данные:'
+
     def __init__(self, error):
-        self._error = error
+        self._error = str(self.error_text) + '\r\n\r\n' + str(error) + '\r\n' + \
+            ''.join(traceback.format_stack())
 
     def display(self):
 
@@ -23,7 +27,8 @@ class Error():
         self.layout.addWidget(label)
 
         self.window.show()
-        self.window.exec_()
+
+        return self
 
     def utf(self, string):
         return QtCore.QObject.trUtf8(self.window, string)

@@ -18,7 +18,7 @@ class App():
 
         except Exception as E:
             self._window.hide()
-            Error(E).display()
+            self. _error = Error(E).display()
 
     def execute(self, mode):
         try:
@@ -27,7 +27,7 @@ class App():
             self.get_qt_app().exec_()
         except Exception as E:
             self._window.hide()
-            Error(E).display()
+            self. _error = Error(E).display()
 
     def get_window(self):
         return self._window
@@ -45,7 +45,7 @@ class App():
             self._mode_instance = getattr(module, name)(self)
         except Exception as E:
             self._window.hide()
-            Error(E).display()
+            self. _error = Error(E).display()
 
     def start_send(self, mode, data):
         try:
@@ -54,5 +54,5 @@ class App():
             self._mode_instance = getattr(module, name)(self, data)
         except Exception as E:
             self._window.hide()
-            Error(E).display()
+            self. _error = Error(E).display()
 
