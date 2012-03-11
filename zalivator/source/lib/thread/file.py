@@ -22,8 +22,13 @@ class Thread_File(Thread_Abstract):
 
             ret = ''
             f = open(self.filename)
-            for i in range(block_count):
+            i = 0
+            while True:
                 data = f.read(1023)
+                if len(data) == 0:
+                    break
+
+                i += 1
                 data = b64encode(data)
                 ret += data
                 self.emit(QtCore.SIGNAL("progress"), round(i * 100 / block_count))
