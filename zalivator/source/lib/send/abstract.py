@@ -14,7 +14,7 @@ class Send_Abstract(Window_Abstract):
     data = {}
     inited_bars = {}
 
-    _domain = 'http://4otaku.local'
+    _domain = 'http://4otaku.ru'
     _url = ''
 
     def __init__(self, app, data):
