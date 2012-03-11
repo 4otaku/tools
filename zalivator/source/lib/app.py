@@ -5,6 +5,8 @@ import sys
 from PyQt4 import QtCore, QtGui
 from lib.menu import Menu
 from lib.error import Error
+from lib.window import *
+from lib.send import *
 
 # ======================================================================
 class App():
@@ -42,7 +44,7 @@ class App():
     def set_mode(self, mode):
         try:
             name = 'Window_' + mode.capitalize()
-            module = __import__('lib.window.' + mode, globals(), locals(), [name], -1)
+            module = __import__('window.' + mode, globals(), locals(), [name], -1)
             self._mode_instance = getattr(module, name)(self)
         except Exception as E:
             self._window.hide()
@@ -51,7 +53,7 @@ class App():
     def start_send(self, mode, data):
         try:
             name = 'Send_' + mode.capitalize()
-            module = __import__('lib.send.' + mode, globals(), locals(), [name], -1)
+            module = __import__('send.' + mode, globals(), locals(), [name], -1)
             self._mode_instance = getattr(module, name)(self, data)
         except Exception as E:
             self._window.hide()

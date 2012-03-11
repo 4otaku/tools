@@ -49,7 +49,7 @@ class Send_Pack(Send_Abstract):
 
     def error_text(self, data):
         if 'large' in data and data['large']:
-            return 'Выбранный вами файл превышает 125 мегабайт.'
+            return 'Выбранный вами файл превышает 125 мегабайт.'.decode('UTF-8')
 
         if 'errors' in data:
             error = data['errors'].pop()
@@ -60,4 +60,4 @@ class Send_Pack(Send_Abstract):
                 ret += '<a href="{0}/art/pack/{1}">{0}/art/pack/{1}</a>'.format(self._domain, data['id'])
             return ret
 
-        return 'Природу ошибки определить не удалось.'
+        return 'Природу ошибки определить не удалось.'.decode('UTF-8')

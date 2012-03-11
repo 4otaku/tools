@@ -14,7 +14,7 @@ class Send_Abstract(Window_Abstract):
     data = {}
     inited_bars = {}
 
-    _domain = 'http://4otaku.ru'
+    _domain = 'http://4otaku.local'
     _url = ''
 
     def __init__(self, app, data):
@@ -27,7 +27,8 @@ class Send_Abstract(Window_Abstract):
         label.setTextInteractionFlags(QtCore.Qt.TextBrowserInteraction)
         self.get_layout().addWidget(label)
 
-        self._result_box = QtGui.QTextEdit('', self.get_box())
+        self._result_box = QtGui.QTextBrowser(self.get_box())
+        self._result_box.setOpenExternalLinks(True)
         self._result_box.setReadOnly(True)
         self.get_layout().addWidget(self._result_box)
 

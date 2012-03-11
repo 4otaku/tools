@@ -18,9 +18,12 @@ class Window_Help(Window_Text):
 
         path = os.path.abspath(os.path.dirname(sys.argv[0]))
 
-        f = open(path + os.sep + 'help.txt', 'r')
-        data = f.read()
-        f.close()
+        try:
+            f = open(path + os.sep + 'help.txt', 'r')
+            data = f.read()
+            f.close()
+        except Exception as E:
+            data = 'Не удалось открыть файл help.txt'
 
         self._help.setHtml(self.utf(data))
 
