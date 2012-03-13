@@ -1,7 +1,4 @@
 from distutils.core import setup
+import py2exe
 
-setup(name='4otaku_zalivator',
-      version='1.0.0b',
-      py_modules=['main'],
-      packages = ['lib', 'lib.send', 'lib.util', 'lib.window', 'lib.action', 'lib.thread']
-      )
+setup(windows=['main.py'], options={"py2exe":{"includes":["sip"]}})
