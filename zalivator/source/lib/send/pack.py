@@ -3,6 +3,7 @@
 
 from lib.send.abstract import Send_Abstract
 from PyQt4 import QtCore, QtGui
+import os
 
 # ======================================================================
 class Send_Pack(Send_Abstract):
@@ -23,6 +24,7 @@ class Send_Pack(Send_Abstract):
 
         self.send_data['title'] = self.data['title']
         self.send_data['text'] = self.data['text']
+        self.send_data['filename'] = os.path.basename(self.data['filename'])
 
         self.prepare_file(self.data['filename'], self.get_bar('file'))
 

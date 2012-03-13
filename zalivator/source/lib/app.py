@@ -5,8 +5,11 @@ import sys
 from PyQt4 import QtCore, QtGui
 from lib.menu import Menu
 from lib.error import Error
-from lib.window import *
-from lib.send import *
+from lib.window.default import Window_Default
+from lib.window.about import Window_About
+from lib.window.help import Window_Help
+from lib.window.pack import Window_Pack
+from lib.send.pack import Send_Pack
 
 # ======================================================================
 class App():
@@ -43,18 +46,31 @@ class App():
 
     def set_mode(self, mode):
         try:
-            name = 'Window_' + mode.capitalize()
-            module = __import__('window.' + mode, globals(), locals(), [name], -1)
-            self._mode_instance = getattr(module, name)(self)
+            if mode == 'default':
+                self._mode_instance = Window_Default(self)
+                return
+
+            if mode == 'help':
+                self._mode_instance = Window_Help(self)
+                return
+
+            if mode == 'about':
+                self._mode_instance = Window_About(self)
+                return
+
+            if mode == 'pack':
+                self._mode_instance = Window_Pack(self)
+                return
         except Exception as E:
             self._window.hide()
             self._error = Error(E).display()
 
     def start_send(self, mode, data):
         try:
-            name = 'Send_' + mode.capitalize()
-            module = __import__('send.' + mode, globals(), locals(), [name], -1)
-            self._mode_instance = getattr(module, name)(self, data)
+            if mode == 'pack':
+                self._mode_instance = Send_Pack(self, data)
+                return
+
         except Exception as E:
             self._window.hide()
             self._error = Error(E).display()
