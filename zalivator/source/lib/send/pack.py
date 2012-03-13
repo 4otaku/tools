@@ -57,7 +57,7 @@ class Send_Pack(Send_Abstract):
             error = data['errors'].pop()
             ret = self.translate_error_code(error['code']).decode('UTF-8')
             if 'message' in error:
-                ret += '<br />' + error['message'].decode('UTF-8')
+                ret += '<br />'.decode('UTF-8') + error['message'].decode('UTF-8')
             if 'id' in data:
                 ret += '<a href="{0}/art/pack/{1}">{0}/art/pack/{1}</a>'.format(self._domain, data['id'])
             return ret
