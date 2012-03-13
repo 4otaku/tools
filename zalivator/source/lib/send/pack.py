@@ -30,7 +30,6 @@ class Send_Pack(Send_Abstract):
 
     def on_file_finish(self, data):
         self.send_data['archive'] = data
-        print data
         Send_Abstract.on_file_finish(self, data)
 
     def test_send_ready(self):
