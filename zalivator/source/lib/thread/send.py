@@ -40,6 +40,7 @@ class Thread_Send(Thread_Abstract):
                 self.emit(QtCore.SIGNAL("progress"), round(pct))
                 body = body[1024000:]
             f.close()
+            print self._filename
 
             stream = Util_File_Callback(self._filename, 'rb', self.update, self._filename)
             req = urllib2.Request(self._url, stream)
