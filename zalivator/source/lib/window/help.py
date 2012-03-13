@@ -14,6 +14,8 @@ class Window_Help(Window_Text):
     def __init__(self, app):
         Window_Text.__init__(self, app)
 
+        self._text.setFixedHeight(40)
+
         self._help = QtGui.QTextBrowser(self.get_box())
 
         self._help.setHtml(self.utf(self.help_text))
