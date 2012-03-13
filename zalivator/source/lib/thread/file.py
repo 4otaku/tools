@@ -30,7 +30,7 @@ class Thread_File(Thread_Abstract):
 
                 i += 1
                 data = b64encode(data)
-                ret += data
+                ret += data.strip('=')
                 self.emit(QtCore.SIGNAL("progress"), round(i * 100 / block_count))
 
             self.emit(QtCore.SIGNAL("finished"), ret)
