@@ -42,7 +42,7 @@ class Send_Pack(Send_Abstract):
         if data['success']:
             text = self.success_text(data['id'])
         else:
-            text = 'Ошибка.<br /><br />'.decode('UTF-8') + self.error_text(data)
+            text = 'Ошибка.<br /><br />'.decode('utf-8') + self.error_text(data)
 
         self._result_box.setHtml(self.utf(text))
 
@@ -51,15 +51,15 @@ class Send_Pack(Send_Abstract):
 
     def error_text(self, data):
         if 'large' in data and data['large']:
-            return 'Выбранный вами файл превышает 125 мегабайт.'.decode('UTF-8')
+            return 'Выбранный вами файл превышает 125 мегабайт.'.decode('utf-8')
 
         if 'errors' in data:
             error = data['errors'].pop()
-            ret = self.translate_error_code(error['code']).decode('UTF-8')
+            ret = self.translate_error_code(error['code']).decode('utf-8')
             if 'message' in error:
-                ret += '<br />'.decode('UTF-8') + error['message'].decode('UTF-8')
+                ret += '<br />'.decode('utf-8') + error['message'].decode('utf-8')
             if 'id' in data:
                 ret += '<a href="{0}/art/pack/{1}">{0}/art/pack/{1}</a>'.format(self._domain, data['id'])
             return ret
 
-        return 'Природу ошибки определить не удалось.'.decode('UTF-8')
+        return 'Природу ошибки определить не удалось.'.decode('utf-8')
